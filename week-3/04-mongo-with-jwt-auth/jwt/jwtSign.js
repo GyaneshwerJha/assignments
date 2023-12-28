@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const jwtPassword = 'secret';
+const jwtSecret = process.env.JWT_SECRET;
 const z = require('zod');
 function signJwt(username, password) {
     const emailSchema = z.string().email();
@@ -15,17 +15,17 @@ function signJwt(username, password) {
     // if (!userNameResponse.success || !userPasswordResponse.success) {
     //     return null;
     // }
-    const signature = jwt.sign({ username }, jwtPassword)
+    const signature = jwt.sign({ username }, jwtSecret)
     return signature;
 }
 // Inside verifyJwt
 function verifyJwt(token) {
     try {
-        jwt.verify(token, jwtPassword);
-        return true; // If verification succeeds
+        const ans = jwt.verify(token, jwtSecret);
+        return ans; // If verification succeeds
     } catch (err) {
         console.error('JWT verification error:', err);
-        return false; // If an error occurs during verification
+        return { error: 'JWT verification failed' };
     }
 }
 
@@ -34,5 +34,5 @@ module.exports = {
     signJwt,
     verifyJwt,
     // decodeJwt,
-    // jwtPassword,
+    // jwtSecret,
 };

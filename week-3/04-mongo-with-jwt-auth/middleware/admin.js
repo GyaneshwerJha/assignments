@@ -1,5 +1,6 @@
 const { Admin } = require("../db");
 const { verifyJwt } = require("../jwt/jwtSign");
+
 // Middleware for handling auth
 async function adminMiddleware(req, res, next) {
     // Implement admin auth logic
@@ -23,8 +24,9 @@ async function adminMiddleware(req, res, next) {
         if (!verify) {
             return res.status(401).json({ message: 'Unauthorized - Invalid token in middleware' });
         }
-
-        next();
+        if (verify.username) {
+            next();
+        }
     }
     catch (err) {
         console.log("Error while fetching admin", err);
