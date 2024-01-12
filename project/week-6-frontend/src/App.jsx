@@ -1,26 +1,22 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-
-const Header = (props) => {
-  const [title, setTitle] = useState(props.titile);
-
+const App = () => {
   return (
-    <>
-      <button onClick={() => {
-        setTitle(Math.random())
-      }}>Update the title</button>
-      <h1>{title}</h1>
-    </>
+    <div>
+      <CardWrapper innerCompo={<TextComponent/>} />
+    </div>
   );
 };
 
-const App = () => {
+const TextComponent = () => {
   return (
-    <>
-      <Header titile="Title 1" />
-      <Header titile="Title 1" />
-    </>
+    <div>
+      <h1>Hi There</h1>
+    </div>
   );
+};
+
+const CardWrapper = ({innerCompo}) => {
+  return <div style={{ border: "2px solid black" }}>{innerCompo}</div>;
 };
 
 export default App;
