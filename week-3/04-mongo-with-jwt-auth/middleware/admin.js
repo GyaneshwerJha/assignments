@@ -1,4 +1,3 @@
-const { Admin } = require("../db");
 const { verifyJwt } = require("../jwt/jwtSign");
 
 // Middleware for handling auth
