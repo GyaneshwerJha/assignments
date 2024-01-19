@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState, memo } from "react";
+import React, { useCallback, useEffect, useState, memo, useRef } from "react";
 
+/*
 const App = () => {
   const [balance1, setBalance1] = useState({ returns: 0 });
   const [balance2, setBalance2] = useState({ returns: 0 });
@@ -41,4 +42,23 @@ const BalanceCalculator = memo(({ calculateBalance }) => {
   return <div>Your balance is {calculateBalance()}</div>;
 });
 
+*/
+
+const App = () => {
+  const [incomeTax, setIncomeTax] = useState(20000);
+  const divRef = useRef();
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log(divRef.current);
+      divRef.current.innerHTML = 10;
+    }, 5000);
+  }, []);
+
+  return (
+    <div>
+      hi there, your income tax return is <div ref={divRef}>{incomeTax}</div>
+    </div>
+  );
+};
 export default App;
