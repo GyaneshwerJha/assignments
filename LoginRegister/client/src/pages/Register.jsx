@@ -1,4 +1,7 @@
+import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const styles = {
@@ -45,19 +48,37 @@ const Register = () => {
     },
   };
 
+  const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
   });
 
+  const RegisterUser = async (e) => {
+    e.preventDefault();
+    const { name, email, password } = data;
+
+    try {
+      const { data } = await axios.post("/register", {
+        name,
+        email,
+        password,
+      });
+      if (data.error) {
+        toast.error(data.error);
+      } else {
+        setData({});
+         toast.success("Login Successful. Welcome");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <form
-      style={styles.form}
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
+    <form style={styles.form} onSubmit={RegisterUser}>
       <label htmlFor="name" style={styles.label}>
         Name
       </label>

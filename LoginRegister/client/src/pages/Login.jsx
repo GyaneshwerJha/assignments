@@ -1,4 +1,7 @@
+import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const styles = {
@@ -44,21 +47,35 @@ const Login = () => {
       backgroundColor: "#45a049",
     },
   };
-
+  const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
   });
 
-  
+  const loginUser = async (e) => {
+    e.preventDefault();
+    const { email, password } = data;
+    try {
+      const { data } = await axios.post("/login", {
+        email,
+        password,
+      });
+
+      if (data.error) {
+        toast.error(data.error);
+      } else {
+        setData({});
+        navigate('/')
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <form
-      style={styles.form}
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
+    <form style={styles.form} onSubmit={loginUser}>
       <label htmlFor="email" style={styles.label}>
         Email
       </label>
