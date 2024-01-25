@@ -4,10 +4,9 @@ import {
   Route,
   useNavigate,
 } from "react-router-dom";
-import React from "react";
+import React, { Suspense } from "react";
 const Dashboard = React.lazy(() => import("./components/Dashboard"));
-const Landing = React.lazay(() => import("./components/Landing"));
-
+const Landing = React.lazy(() => import("./components/Landing"));
 
 const App = () => {
   return (
@@ -15,8 +14,22 @@ const App = () => {
       <Router>
         <Appbar />
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/" element={<Landing />}></Route>
+          <Route
+            path="/dashboard"
+            element={
+              <Suspense fallback={"Loading....."}>
+                <Dashboard />
+              </Suspense>
+            }
+          ></Route>
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={"Loading"}>
+                <Landing />
+              </Suspense>
+            }
+          ></Route>
         </Routes>
       </Router>
     </div>
